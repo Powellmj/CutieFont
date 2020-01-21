@@ -59,8 +59,14 @@
   color: rgb(214, 214, 214) !important;
 }
 
-.c-button-unstyled {
+.p-classic_nav__model__button__icon, .p-classic_nav__right__button, 
+.c-icon--user, .c-icon--star-o, .p-classic_nav__right__search__placeholder, 
+.p-classic_nav__right__search__icon, .p-classic_nav__model__title__info__members {
   color: rgb(214, 214, 214) !important;
+}
+
+.p-classic_nav__right__search {
+  border:rgb(214, 214, 214) solid 1px !important;
 }
 
 .p-context_bar {
@@ -87,3 +93,4 @@
 .p-message_pane__foreword__description {
   color: rgb(214, 214, 214) !important;
 }
+
