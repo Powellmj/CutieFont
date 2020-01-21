@@ -1,0 +1,89 @@
+[format='cutie'], .c-message_kit__background {
+  display: block !important;
+  width: 70% !important;
+  float: left !important;
+  border-radius: 20px !important;
+  margin: 3px 0 !important;
+  margin-left: 5px !important;
+  padding: 10px 0 !important;
+  font-weight: bold !important;
+}
+
+[target='Tom'] {
+  background-color: orange !important;
+}
+
+[target='Joshua'] {
+  background-color: #CAEADE !important;
+}
+
+[target='Garon'] {
+  background-color: pink !important;
+}
+
+[target='Michael'] {
+  background-color: cadetblue !important;
+  float: right !important;
+  margin-right: 5px !important;
+}
+
+[target='BreakBot'] {
+  background-color: rgb(90, 199, 0) !important;
+  font-size: 11px !important;
+  font-family: 'Press Start 2P', cursive !important;
+}
+
+[target='Andy'] {
+  background-color: rgb(160, 88, 255) !important;
+}
+
+[target='trevoruptain'] {
+  background-color: rgb(255, 115, 0) !important;
+}
+
+[target='Sammy'] {
+  background-color: rgb(0, 255, 157) !important;
+  }
+
+.c-virtual_list__scroll_container {
+    background-color: rgb(49, 49, 49) !important;
+  }
+
+.c-coachmark-anchor, .workspace__primary_view_footer {
+  background-color: rgb(29, 29, 29) !important;
+  padding-top: 5px !important;
+}
+
+.p-classic_nav__channel_header, .p-workspace__top_nav, .p-classic_nav__model__title__name--dim {
+  background-color: rgb(29, 29, 29) !important;
+  color: rgb(214, 214, 214) !important;
+}
+
+.c-button-unstyled {
+  color: rgb(214, 214, 214) !important;
+}
+
+.p-context_bar {
+  background-color: rgba(29, 29, 29, 0) !important;
+}
+
+.p-message_input, .p-message_input_field {
+  background-color: cadetblue !important;
+  border: none !important;
+  border-radius: 5px !important;
+  top: 1px !important;
+}
+
+.ql-composer-sticky {
+  background-color:rgb(85, 124, 126) !important;
+  border: none !important;
+  border-radius: 5px !important;
+}
+
+.c-icon--paperclip {
+  top: 2px !important;
+}
+
+.p-message_pane__foreword__description {
+  color: rgb(214, 214, 214) !important;
+}

@@ -6,8 +6,14 @@
   "permissions": [
     "tabs",
     "<all_urls>",
-    "storage"
+    "storage",
+    "activeTab"
   ],
+    "content_scripts": [{
+      "matches": ["https://app.slack.com/*"],
+        "css": ["styles.css"],
+        "js": ["background.js"]
+      }],
   "browser_action": {
     "default_icon": "./images/navi.png",
     "default_popup": "popup.html"
