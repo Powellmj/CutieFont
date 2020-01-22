@@ -1,4 +1,4 @@
-[format='cutie'], .c-message_kit__background {
+[target=''], .c-message_kit__background {
   display: block !important;
   width: 70% !important;
   float: left !important;
@@ -45,7 +45,7 @@
   background-color: rgb(0, 255, 157) !important;
   }
 
-.c-virtual_list__scroll_container {
+.c-virtual_list__scroll_container, .c-virtual_list >.c-scrollbar__hider {
     background-color: rgb(49, 49, 49) !important;
   }
 
@@ -61,7 +61,7 @@
 
 .p-classic_nav__model__button__icon, .p-classic_nav__right__button, 
 .c-icon--user, .c-icon--star-o, .p-classic_nav__right__search__placeholder, 
-.p-classic_nav__right__search__icon, .p-classic_nav__model__title__info__members {
+.p-classic_nav__right__search__icon, .p-classic_nav__model__title__info__members, strong {
   color: rgb(214, 214, 214) !important;
 }
 
@@ -94,3 +94,10 @@
   color: rgb(214, 214, 214) !important;
 }
 
+.p-channel_sidebar__static_list {
+  background-color: #3F0E40 !important;
+}
+
+.p-rich_text_section, .c-message__sender_link, .c-timestamp__label {
+  color: black !important;
+}

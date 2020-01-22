@@ -1,8 +1,21 @@
 'use strict';
 
-// This function targets people and gives messages associated with them a class that I can style.
+paintTargets();
+loadStyles();
+
+window.addEventListener("keypress", function(e) {
+  if (e.key === 'Enter') {
+    paintTargets()
+  }
+})
+
 function paintTargets() {
-  var targets = {
+
+  messageIds = chrome.storage.sync.get({['messageIds']: messageIds}, function () {
+   return 'messageIds'[messageIds];
+  }) || {};
+
+  let targets = {
     "Tom Betthauser": "Tom",
     "Joshua Graham": "Joshua",
     "Garon Hock": "Garon",
@@ -10,43 +23,50 @@ function paintTargets() {
     "BreakBot": "BreakBot",
     "Andy Wynkoop": "Andy",
     "trevoruptain": "trevoruptain",
-    "Sammy Gutierrez": "Sammy"}
-    
-  var targetStreak = '';
+    "Sammy Gutierrez": "Sammy"
+  }
 
-  // chrome.storage.sync.set({ key: value }, function () {
-  //   console.log('Value is set to ' + value);
-  // });
-
-  // chrome.storage.sync.get(['key'], function (result) {
-  //   console.log('Value currently is ' + result.key);
-  // });
-
-
-  document.querySelectorAll(".c-message_kit__background").forEach(message => {
-    if (message.innerHTML.includes("message_sender_name")) {
-      targetStreak = targets[message.querySelector(".c-message__sender_link").innerHTML];
+  let targetStreak = null;
+  let messages = document.querySelectorAll(".c-virtual_list__item")
+  messages.forEach((message, idx) => {
+    if (!(message.getAttribute("id") in messageIds)) {
+      if (message.innerHTML.includes("message_sender_name")) {
+        targetStreak = targets[message.querySelector(".c-message__sender_link").innerHTML];
+        applyTag(message, targetStreak);
+      } else {
+        targetStreak = targetStreak || findTag(messages, idx);
+        applyTag(message, targetStreak);
+      }
+    } else {
+      message.firstChild.setAttribute("target", `${messageIds[message.getAttribute("id")]}`);
     }
-      message.setAttribute("target", `${targetStreak}`);
-      message.setAttribute("format", "cutie");
+  });
+  chrome.storage.sync.set({['messageIds']: messageIds}, function() {
+    console.log({ ['messageIds']: messageIds });
   })
 }
 
-observePainter()
-function observePainter() {
-    paintTargets()
-    requestAnimationFrame(observePainter);
+function findTag(messages, idx) {
+  if (idx === 0) { return null }
+  let targ = messages[(idx - 1)].firstChild.getAttribute("target")
+  if (targ) {
+    return targ
+  } else {
+    return findTag(messages, idx-1)
+  }
+}
+
+function applyTag(message, target) {
+  if (target) {
+  message.firstChild.setAttribute("target", `${target}`);
+  messageIds[message.getAttribute("id")] = `${target}`
+  }
 }
 
 //This function loads styles to make everything pretty.
 function loadStyles() {
-    var link = document.createElement('style')
-    var html = "@import url('https://fonts.googleapis.com/css?family=Fascinate+Inline|Indie+Flower|Press+Start+2P|Roboto&display=swap')"
+    let link = document.createElement('style')
+    let html = "@import url('https://fonts.googleapis.com/css?family=Fascinate+Inline|Indie+Flower|Press+Start+2P|Roboto&display=swap')"
     link.innerHTML = html
     document.getElementsByTagName('head')[0].appendChild(link)
 }
-
-
-//these invoke all the functions (I probably will just make everything run by default once I'm happy with everything)
-paintTargets();
-loadStyles();
