@@ -1,5 +1,9 @@
 'use strict';
 
+let prevCount = 0
+let messageIds = {}
+loadMessageIds();
+
 paintTargets();
 loadStyles();
 
@@ -9,11 +13,9 @@ window.addEventListener("keypress", function(e) {
   }
 })
 
-function paintTargets() {
 
-  messageIds = chrome.storage.sync.get({['messageIds']: messageIds}, function () {
-   return 'messageIds'[messageIds];
-  }) || {};
+
+function paintTargets() {
 
   let targets = {
     "Tom Betthauser": "Tom",
@@ -37,13 +39,22 @@ function paintTargets() {
         targetStreak = targetStreak || findTag(messages, idx);
         applyTag(message, targetStreak);
       }
+      saveMessageIds(messageIds)
     } else {
       message.firstChild.setAttribute("target", `${messageIds[message.getAttribute("id")]}`);
     }
   });
-  chrome.storage.sync.set({['messageIds']: messageIds}, function() {
-    console.log({ ['messageIds']: messageIds });
-  })
+}
+
+function saveMessageIds(state) {
+  chrome.storage.sync.set(state);
+  }
+
+function loadMessageIds() {
+  chrome.storage.sync.get(null, function (result) {
+    messageIds = result;
+    console.log('Loaded', result)
+  }) 
 }
 
 function findTag(messages, idx) {
