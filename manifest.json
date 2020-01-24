@@ -12,7 +12,7 @@
     "content_scripts": [{
       "matches": ["https://app.slack.com/*"],
         "css": ["styles.css"],
-        "js": ["background.js"]
+        "js": ["background.js", "observer.js"]
       }],
   "browser_action": {
     "default_icon": "./images/navi.png",

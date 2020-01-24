@@ -108,19 +108,22 @@ let colorIds = {
   'UN65PKSPR': 'cadetblue'
 };
 loadIds();
-var setup = setInterval(function(){
-  setupObserver();
+
+var setup = setInterval(function () {
+  setupMainObserver();
+  setupSecondaryObserver();
   paintMessages();
 }, 1);
 
 function paintMessages() {
-  let colorId = null;
-  let stateChange = false;
-  let messages = Array.from(document.querySelectorAll(".c-virtual_list__item"))
+  var colorId = null;
+  var stateChange = false;
+  var messages = Array.from(document.querySelectorAll(".c-virtual_list__item"))
     .filter(message => message.innerHTML.includes("c-message_kit__background"))
 
   messages.forEach((message, idx) => {
-    if (!(message.getAttribute("id") in colorIds)) {
+    var messageId = message.getAttribute("id")
+    if (!(messageId in colorIds)) {
       if (message.innerHTML.includes("message_sender_name")) {
         var userId = message.querySelector(".c-message__sender_link").getAttribute('data-message-sender')
         colorId = colorIds[userId] || tagUser(userId)
@@ -130,8 +133,7 @@ function paintMessages() {
         stateChange = tagMessage(message, colorId);
       }
     } else {
-      message.firstChild.setAttribute("color", `${colorIds[message.getAttribute("id")]}`);
-      message.firstChild.setAttribute("style", `background-color: ${colorIds[message.getAttribute("id")]};`);
+      tagMessage(message, colorIds[messageId]);
     }
   });
   if (stateChange) {saveColorIds(colorIds)}
@@ -153,9 +155,9 @@ function tagUser(userId) {
 
 function findColorId(messages, idx) {
   if (idx === 0) { return null }
-  let targ = messages[(idx - 1)].firstChild.getAttribute("color")
-  if (targ) {
-    return targ
+  let colorId = messages[(idx - 1)].firstChild.getAttribute("color")
+  if (colorId) {
+    return colorId
   } else {
     return findColorId(messages, idx-1)
   }
@@ -169,27 +171,4 @@ function tagMessage(message, target = null) {
     return true;
   }
   return false;
-}
-
-function setupObserver() {
-  var target = document.querySelector('.c-virtual_list__scroll_container')
-
-  var observer = new MutationObserver(function(mutationList) {
-    for (var i = 0; i < mutationList.length; i++) {
-      if ( mutationList[i].addedNodes.length > 0 ) {
-        return paintMessages();
-      }
-    }
-  });
-
-  var config = {
-    attributes: false,
-    childList: true,
-    characterData: false
-  };
-
-  if (target) {
-    observer.observe(target, config);
-    clearInterval(setup)
-  }
 }
