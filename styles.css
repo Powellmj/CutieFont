@@ -1,4 +1,4 @@
-[color=''], .c-message_kit__background {
+[data-color=''], .c-message_kit__background {
   display: block !important;
   width: 70% !important;
   float: left !important;
@@ -106,7 +106,7 @@
   color: black !important;
 }
 
-[color='cadetblue'] {
+[data-color='101'] {
   background-color: cadetblue !important;
   float: right !important;
   margin-right: 5px !important;
