@@ -10,7 +10,7 @@
     "activeTab"
   ],
     "content_scripts": [{
-      "matches": ["https://app.slack.com/*"],
+      "matches": ["https://*.slack.com/*"],
         "css": ["styles.css"],
         "js": ["paint.js", "observer.js"]
       }],

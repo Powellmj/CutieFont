@@ -3,16 +3,22 @@ function setupMainObserver() {
 
   var observer = new MutationObserver(function (mutationList) {
     for (var i = 0; i < mutationList.length; i++) {
-      if (mutationList[i].addedNodes.length > 0) {
+      if (mutationList[i].addedNodes.length > 0 && 
+        !mutationList[i].target.className.includes('c-message_kit__actions')) {
         return paintMessages();
+      }
+      else if (mutationList[i].target.className.includes('c-message_kit__actions')) {
+        addButtons(mutationList[i].target)
       }
     }
   });
 
   var config = {
-    attributes: false,
+    oldValue: true,
+    subtree: true,
+    attributes: true,
     childList: true,
-    characterData: false
+    characterData: true
   };
 
   if (target) {
@@ -44,3 +50,15 @@ function setupSecondaryObserver() {
     clearInterval(setup)
   }
 }
+
+document.addEventListener("click", function (e) {
+  if (e.target && e.target.matches("button.blockButton")) {
+    blockButton(e.target);
+  }
+});
+
+document.addEventListener("click", function (e) {
+  if (e.target && e.target.matches("button.xButton")) {
+    xButton(e.target);
+  }
+});

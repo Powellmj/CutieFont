@@ -16,7 +16,7 @@
 .p-threads_flexpane__separator_count {
   background-color: rgb(49, 49, 49) !important;
   background-image: inherit !important;
-  color: white !important;
+  color: rgb(255, 255, 255) !important;
 }
 
 .p-message_pane__limited_history_foreword, 
@@ -110,4 +110,22 @@
   background-color: cadetblue !important;
   float: right !important;
   margin-right: 5px !important;
+}
+
+.blockButton, .xButton {
+  background-color: white !important;
+  color: rgba(var(--sk_foreground_max,29,28,29),.7) !important;
+  margin-right: 2px !important;
+  position: relative !important;
+  overflow: visible !important;
+  font-size: 10px !important;
+}
+
+.blockButton {
+  top: -4px;
+}
+
+.blockButton:hover, .xButton:hover {
+  background: rgba(var(--sk_foreground_min,29,28,29),.04) !important;
+  color: rgba(var(--sk_primary_foreground,29,28,29),1) !important;
 }

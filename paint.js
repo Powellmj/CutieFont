@@ -158,6 +158,9 @@ function loadIds() {
 }
 
 function tagUser(userId) {
+  if (colorIds[userId] === 0) {
+    return colorIds[userId]
+  }
   return colorIds[userId] = Math.floor(Math.random() * Math.floor(100))
 }
 
@@ -182,6 +185,39 @@ function tagMessage(message, colorNumber = null, userId = null) {
       colorIds[messageId.split('.')[0]] = colorNumber
       return true;
     }
+  } 
+  else if (colorNumber === 0) {
+    message.firstChild.setAttribute("data-color", 'xMessage');
+    message.setAttribute("style", 'display: none !important;');
   }
   return false;
+}
+
+function addButtons(node) {
+  if (document.querySelector('.c-message_actions__container')) {
+    var node1 = document.createElement("Button");
+    node1.setAttribute('x-message-id', `${node.parentNode.parentNode.parentNode.getAttribute("id").split('.')[0]}`)
+    node1.className = "xButton c-icon c-icon--times c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
+    document.querySelector('.c-message_actions__container').appendChild(node1)
+    if (node.parentNode.parentNode.querySelector(".c-message__sender_link")) {
+      var node2 = document.createElement("Button");
+      node2.setAttribute('block-message-id', `${document.querySelector('.c-message_actions__container').parentNode.parentNode.querySelector(".c-message__sender_link").getAttribute('data-message-sender')}`)
+      node2.innerHTML = "Block"
+      node2.className = "blockButton c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
+      document.querySelector('.c-message_actions__container').appendChild(node2)
+    }
+  }
+}
+
+function xButton(button) {
+  colorIds[button.getAttribute('x-message-id')] = 0
+  saveColorIds(colorIds)
+  paintMessages();
+}
+
+function blockButton(button) {
+  var parent = `${button.getAttribute('block-message-id')}`
+  colorIds[parent] = 0
+  saveColorIds(colorIds)
+  paintMessages();
 }
