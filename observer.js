@@ -1,13 +1,13 @@
 function setupMainObserver() {
-  var target = document.querySelector('.c-virtual_list__scroll_container')
+  var target = document.querySelectorAll('.c-virtual_list__scroll_container')[1]
 
   var observer = new MutationObserver(function (mutationList) {
     for (var i = 0; i < mutationList.length; i++) {
       if (mutationList[i].addedNodes.length > 0 && 
-        !mutationList[i].target.className.includes('c-message_kit__actions')) {
+        mutationList[i].target.className.includes('c-virtual_list__scroll_container')) {
         return paintMessages();
       }
-      else if (mutationList[i].target.className.includes('c-message_kit__actions')) {
+      else if (mutationList[i].addedNodes.length > 0 && mutationList[i].target.className.includes('c-message_kit__actions')) {
         addButtons(mutationList[i].target)
       }
     }

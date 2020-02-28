@@ -9,7 +9,7 @@
   font-weight: bold !important;
 }
 
-.c-virtual_list__scroll_container, .c-virtual_list >.c-scrollbar__hider {
+.c-message_list > .c-scrollbar__hider, .p-workspace__secondary_view_contents {
     background-color: rgb(49, 49, 49) !important;
 }
 
@@ -21,12 +21,16 @@
 
 .p-message_pane__limited_history_foreword, 
 .p-message_pane__limited_history_foreword div, 
-.p-flexpane_header, .p-threads_flexpane__header_channel_name, .c-icon--times {
-    background-color: #3F0E40 !important;
-    background-image: inherit !important;
-    color: white !important;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+.p-flexpane_header, .p-threads_flexpane__header_channel_name, .p-workspace__secondary_view_contents .c-icon--times {
+  background-color: #3F0E40 !important;
+  background-image: inherit !important;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  color: white !important;
+}
+
+.c-icon--times {
+  background-color: transparent !important;
 }
 
 .c-message__reply_bar:hover, .c-message__reply_bar_view_thread,
