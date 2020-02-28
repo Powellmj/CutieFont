@@ -29,3 +29,6 @@ function findColorId(messages, idx) {
 
 Because some messages are not directly associated with users, CutieFont has to recursively climb through messages to find the user associated with the message. This is one reason why it was critical to implement Chrome's Storage Sync to save on resources and to give a smoother experience.
 
+<img src="images/Blocking.png">
+
+A recent addition to CutieFont's functionality is adding the ability to ignore messages and to block users. I will soon add the feature to view all ignored messages and blocked users.
