@@ -62,3 +62,9 @@ document.addEventListener("click", function (e) {
     xButton(e.target);
   }
 });
+
+document.addEventListener("click", function (e) {
+  if (e.target && e.target.matches("button.blocked-message-button")) {
+    revealTarget(e.target);
+  }
+});

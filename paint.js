@@ -101,7 +101,8 @@ const colors = {
   97:'rgb(153, 102, 140)',
   98:'rgb(153, 102, 128)',
   99:'rgb(153, 102, 115)',
-  100:'rgb(153, 102, 102)'
+  100:'rgb(153, 102, 102)',
+  102:'rgb(143, 143, 143)'
 }
 
 // chrome.storage.sync.clear()
@@ -193,7 +194,8 @@ function tagMessage(message, colorNumber = null, userId = null) {
     colorIds[messageId] = userId
   } else if (colorIds[userId] === 0 || colorNumber === 0) {
     message.firstChild.setAttribute("data-user", 'xMessage');
-    message.setAttribute("style", 'display: none !important;');
+    message.firstChild.setAttribute("style", 'display: none !important;');
+    blockedMessage(message)
   }
   return true;
 }
@@ -225,4 +227,28 @@ function blockButton(button) {
   colorIds[parent] = 0
   saveColorIds(colorIds)
   paintMessages(true);
+}
+
+function revealTarget(button) {
+  var parent = button.parentNode.parentNode.getAttribute("id").split('.')[0]
+  button.parentNode.parentNode.removeChild(button.parentNode)
+  colorIds[parent] = 'revealed'
+  colorIds['revealed'] = 102
+  saveColorIds(colorIds)
+  paintMessages(true);
+}
+
+function blockedMessage(message) {
+  if (!(message.querySelector('.blocked-message'))) {
+    let author = message.querySelector(".c-message__sender_link").innerHTML
+    var node1 = document.createElement("Div");
+    node1.innerHTML = `This message by ${author} was ignored.  `
+    node1.className = "blocked-message"
+    message.appendChild(node1)
+
+    var node2 = document.createElement("Button");
+    node2.innerHTML = "(Click here to show the message)"
+    node2.className = "blocked-message-button"
+    node1.appendChild(node2)
+  }
 }

@@ -1,4 +1,4 @@
-[data-color=''], .c-message_kit__background {
+.c-message_kit__background {
   display: block !important;
   width: 70% !important;
   float: left !important;
@@ -7,6 +7,25 @@
   margin-left: 5px !important;
   padding: 10px 0 !important;
   font-weight: bold !important;
+  border: 1px solid transparent;
+}
+
+.c-message_kit__background:hover {
+  margin-left: 15px !important;
+  border: 1px solid white;
+  transition: .2s;
+}
+
+[data-user='UN65PKSPR'] {
+  background-color: cadetblue !important;
+  float: right !important;
+  margin-right: 5px !important;
+}
+
+[data-user='UN65PKSPR']:hover {
+  margin-right: 15px !important;
+  border: 1px solid white;
+  transition: .2s;
 }
 
 .c-message_list > .c-scrollbar__hider, .p-workspace__secondary_view_contents {
@@ -113,12 +132,6 @@
   color: black !important;
 }
 
-[data-user='UN65PKSPR'] {
-  background-color: cadetblue !important;
-  float: right !important;
-  margin-right: 5px !important;
-}
-
 .blockButton, .xButton {
   background-color: white !important;
   color: rgba(var(--sk_foreground_max,29,28,29),.7) !important;
@@ -143,4 +156,37 @@
 
 .p-channel_sidebar__close_container:hover, .c-link.p-channel_sidebar__channel:hover, .p-channel_sidebar__link:hover {
   background-color: rgb(2, 78, 129) !important;
+}
+
+.c-link.p-file_image_thumbnail__wrapper, .c-pillow_file_container.c-file_gallery__message_file.p-message_file.p-message_file--media.p-message_file--show_preview {
+  background-color: rgba(255, 255, 255, 0.178) !important;
+  box-shadow: 0 0 0 1px rgba(221, 221, 221, 0.26) !important;
+}
+
+.blocked-message {
+  display: block;
+  width: 70%;
+  float: left;
+  border-radius: 20px;
+  margin: 3px 0;
+  margin-left: 5px;
+  padding: 10px 0 10px 20px;
+  font-weight: bold;
+  background-color: rgb(143, 143, 143);
+}
+
+.blocked-message:hover {
+  margin-left: 15px;
+  border: 1px solid white;
+  transition: .2s;
+}
+
+.blocked-message-button {
+  color: rgb(0, 80, 155);
+  font-weight: bold;
+}
+
+.blocked-message-button:hover {
+  color: rgb(0, 110, 212);
+  font-weight: bold;
 }
