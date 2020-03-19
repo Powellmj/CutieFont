@@ -22,10 +22,9 @@
 .p-message_pane__limited_history_foreword, 
 .p-message_pane__limited_history_foreword div, 
 .p-flexpane_header, .p-threads_flexpane__header_channel_name, .p-workspace__secondary_view_contents .c-icon--times {
-  background-color: #3F0E40 !important;
+  background-color: rgb(3, 57, 94) !important;
   background-image: inherit !important;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
+  border-top: none;
   color: white !important;
 }
 
@@ -39,9 +38,17 @@
   color: black;
 }
 
-.c-link, .c-message__body--automated {
-  color: black;
+.c-link, .c-message__body--automated, .c-link.c-member_slug.c-member_slug--light.c-member_slug--link {
+  color: rgb(0, 61, 117);
   font-weight: bold;
+}
+
+.p-classic_nav__model__title__info__topic__content > .c-link {
+  color: white;
+}
+
+.p-classic_nav__model__title__info__topic__text::before {
+  display: none !important;
 }
 
 .c-message__reply_bar:hover {
@@ -50,10 +57,6 @@
 
 .p-classic_nav__right_header {
     border-bottom: 8px white solid;
-}
-
-.p-flexpane_header {
-   background-color: #3F0E40 !important;
 }
 
 .c-coachmark-anchor, .workspace__primary_view_footer {
@@ -69,7 +72,7 @@
 .p-classic_nav__model__button__icon, .p-classic_nav__right__button, 
 .c-icon--user, .c-icon--star-o, .p-classic_nav__right__search__placeholder, 
 .p-classic_nav__right__search__icon, .p-classic_nav__model__title__info__members, strong,
-.c-message__body {
+.c-message__body, .c-icon--thumb-tack, .c-button-unstyled.p-classic_nav__model__title__info__pins {
   color: rgb(214, 214, 214) !important;
 }
 
@@ -102,15 +105,15 @@
   color: rgb(214, 214, 214) !important;
 }
 
-.p-channel_sidebar__static_list {
-  background-color: #3F0E40 !important;
+.c-message_kit__hover.c-message_kit__message.p-activity_flexpane__item .p-rich_text_section {
+  color: white !important;
 }
 
 .p-rich_text_section, .c-message__sender_link, .c-timestamp__label {
   color: black !important;
 }
 
-[data-color='101'] {
+[data-user='UN65PKSPR'] {
   background-color: cadetblue !important;
   float: right !important;
   margin-right: 5px !important;
@@ -132,4 +135,12 @@
 .blockButton:hover, .xButton:hover {
   background: rgba(var(--sk_foreground_min,29,28,29),.04) !important;
   color: rgba(var(--sk_primary_foreground,29,28,29),1) !important;
+}
+
+.p-classic_nav__team_header, .p-channel_sidebar, .p-channel_sidebar--classic_nav, .p-flexpane_header, .p-threads_flexpane__header_channel_name {
+  background-color: rgb(3, 57, 94) !important;
+}
+
+.p-channel_sidebar__close_container:hover, .c-link.p-channel_sidebar__channel:hover, .p-channel_sidebar__link:hover {
+  background-color: rgb(2, 78, 129) !important;
 }

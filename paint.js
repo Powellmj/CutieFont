@@ -68,7 +68,7 @@ const colors = {
   64:'rgb(0, 191, 255)',
   65:'rgb(0, 128, 255)',
   66:'rgb(0, 64, 255)',
-  67:'rgb(0, 0, 255)',
+  67:'rgb(66, 66, 255)',
   68:'rgb(204, 255, 255)',
   69:'rgb(128, 0, 255)',
   70:'rgb(191, 0, 255)',
@@ -106,7 +106,6 @@ const colors = {
 
 // chrome.storage.sync.clear()
 let colorIds = {
-  'UN65PKSPR':101
 };
 loadIds();
 
@@ -116,36 +115,40 @@ var setup = setInterval(function () {
   paintMessages();
 }, 1);
 
-function paintMessages() {
+function paintMessages(block = false) {
   var colorId = null;
+  var userId = null;
   var stateChange = false;
   var messages = Array.from(document.querySelectorAll(".c-virtual_list__item"))
     .filter(message => message.innerHTML.includes("c-message_kit__background"))
 
   messages.forEach((message, idx) => {
     var messageId = message.getAttribute("id").split('.')[0]
-    if (message.firstChild.getAttribute("data-color")) {
-      return
-    } else if (!(messageId in colorIds)) {
+    if (message.firstChild.getAttribute("data-user") && !block) {
+    } else if (messageId in colorIds) {
+      tagMessage(message, colorIds[messageId] === 0 ? colorIds[messageId] : colorId, colorIds[messageId]);
+    } else {
       if (message.innerHTML.includes("message_sender_name")) {
-        var userId = message.querySelector(".c-message__sender_link").getAttribute('data-message-sender')
-        colorId = colorIds[userId] || tagUser(userId)
+        userId = message.querySelector(".c-message__sender_link").getAttribute('data-message-sender') || 'bot'
+
+        colorId = colorIds[userId] || tagUser(userId, message)
         stateChange = tagMessage(message, colorId, userId);
       } else {
-        colorId = colorId || findColorId(messages, idx);
-        stateChange = tagMessage(message, colorId);
+        userId = userId || findUserId(messages, idx);
+        stateChange = tagMessage(message, colorId, userId);
       }
-    } else {
-      tagMessage(message, colorIds[messageId]);
     }
   });
-  if (stateChange) {saveColorIds(colorIds)}
+  if (stateChange) { 
+    saveColorIds(colorIds) 
+  }
 }
 
 function saveColorIds(colorIds) {
   chrome.storage.sync.set(colorIds, function() {
     if (chrome.runtime.lastError) {
-      StorageArea.remove(Object.keys(colorIds).slice(0, 30))
+      chrome.storage.sync.remove(Object.keys(colorIds).slice(0, 30), function() {
+      })
     }
   });
   console.log('saved')
@@ -154,43 +157,45 @@ function saveColorIds(colorIds) {
 function loadIds() {
   chrome.storage.sync.get(null, function (syncedColorIds) {
     colorIds = syncedColorIds;
+    console.log(colorIds)
   }) 
 }
 
-function tagUser(userId) {
+function tagUser(userId, message) {
+  if (message.querySelector(".c-message__sender_link").innerHTML === document.querySelector('.p-classic_nav__team_header__user__name__truncate').innerHTML) {
+    return colorIds[userId] = '101'
+  }
   if (colorIds[userId] === 0) {
     return colorIds[userId]
   }
-  return colorIds[userId] = Math.floor(Math.random() * Math.floor(100))
+  return colorIds[userId] = Math.ceil(Math.random() * 100)
 }
 
-function findColorId(messages, idx) {
+function findUserId(messages, idx) {
   if (idx === 0) { return null }
-  let colorId = messages[(idx - 1)].firstChild.getAttribute("data-color")
-  if (colorId) {
-    return parseInt(colorId)
+  let userId = messages[idx].firstChild.getAttribute("data-user")
+  if (userId) {
+    return userId
   } else {
-    return findColorId(messages, idx-1)
+    return findUserId(messages, idx - 1)
   }
 }
 
 function tagMessage(message, colorNumber = null, userId = null) {
-  if (colorNumber) {
-    message.firstChild.setAttribute("data-color", colorNumber);
+  var messageId = message.getAttribute("id").split('.')[0]
+  if (colorNumber && userId) {
+    message.firstChild.setAttribute("data-user", userId);
     message.firstChild.setAttribute("style", `background-color: ${colors[colorNumber]};`);
-    var messageId = message.getAttribute("id")
-    if (messageId.includes("thread-list_") || userId) {
-      return false
-    } else { 
-      colorIds[messageId.split('.')[0]] = colorNumber
-      return true;
-    }
-  } 
-  else if (colorNumber === 0) {
-    message.firstChild.setAttribute("data-color", 'xMessage');
+    colorIds[messageId] = userId
+  } else if (userId && colorNumber !== 0 && colorIds[userId] !== 0) {
+    message.firstChild.setAttribute("data-user", userId);
+    message.firstChild.setAttribute("style", `background-color: ${colors[colorIds[userId]]};`);
+    colorIds[messageId] = userId
+  } else if (colorIds[userId] === 0 || colorNumber === 0) {
+    message.firstChild.setAttribute("data-user", 'xMessage');
     message.setAttribute("style", 'display: none !important;');
   }
-  return false;
+  return true;
 }
 
 function addButtons(node) {
@@ -199,25 +204,25 @@ function addButtons(node) {
     node1.setAttribute('x-message-id', `${node.parentNode.parentNode.parentNode.getAttribute("id").split('.')[0]}`)
     node1.className = "xButton c-icon c-icon--times c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
     document.querySelector('.c-message_actions__container').appendChild(node1)
-    if (node.parentNode.parentNode.querySelector(".c-message__sender_link")) {
-      var node2 = document.createElement("Button");
-      node2.setAttribute('block-message-id', `${document.querySelector('.c-message_actions__container').parentNode.parentNode.querySelector(".c-message__sender_link").getAttribute('data-message-sender')}`)
-      node2.innerHTML = "Block"
-      node2.className = "blockButton c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
-      document.querySelector('.c-message_actions__container').appendChild(node2)
-    }
+
+    var node2 = document.createElement("Button");
+    node2.setAttribute('block-message-id', `${node.parentNode.parentNode.getAttribute("data-user")}`)
+    node2.innerHTML = "Block"
+    node2.className = "blockButton c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
+    document.querySelector('.c-message_actions__container').appendChild(node2)
   }
 }
 
 function xButton(button) {
-  colorIds[button.getAttribute('x-message-id')] = 0
+  let ignoredMessageId = button.getAttribute('x-message-id')
+  colorIds[ignoredMessageId] = 0
   saveColorIds(colorIds)
-  paintMessages();
+  paintMessages(true);
 }
 
 function blockButton(button) {
-  var parent = `${button.getAttribute('block-message-id')}`
+  var parent = button.getAttribute('block-message-id')
   colorIds[parent] = 0
   saveColorIds(colorIds)
-  paintMessages();
+  paintMessages(true);
 }
