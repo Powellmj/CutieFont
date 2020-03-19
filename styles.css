@@ -1,3 +1,4 @@
+/* Default formatting of messages */
 .c-message_kit__background {
   display: block !important;
   width: 70% !important;
@@ -10,34 +11,40 @@
   border: 1px solid transparent;
 }
 
+/* Hover for messages */
 .c-message_kit__background:hover {
   margin-left: 15px !important;
   border: 1px solid white;
   transition: .2s;
 }
 
+/* Default formatting of current user's messages */
 [data-user='UN65PKSPR'] {
   background-color: cadetblue !important;
   float: right !important;
   margin-right: 5px !important;
 }
 
+/* Hover for current user's messages */
 [data-user='UN65PKSPR']:hover {
   margin-right: 15px !important;
   border: 1px solid white;
   transition: .2s;
 }
 
+/* Makes message index's background color dark */
 .c-message_list > .c-scrollbar__hider, .p-workspace__secondary_view_contents {
-    background-color: rgb(49, 49, 49) !important;
+  background-color: rgb(49, 49, 49) !important;
 }
 
+/* Makes threads replies stand out on dark background */
 .p-threads_flexpane__separator_count {
   background-color: rgb(49, 49, 49) !important;
   background-image: inherit !important;
   color: rgb(255, 255, 255) !important;
 }
 
+/* Makes thread banner and various other banners blue and text stand out */
 .p-message_pane__limited_history_foreword, 
 .p-message_pane__limited_history_foreword div, 
 .p-flexpane_header, .p-threads_flexpane__header_channel_name, .p-workspace__secondary_view_contents .c-icon--times {
@@ -47,10 +54,12 @@
   color: white !important;
 }
 
+/* Makes close icon stand out on dark background */
 .c-icon--times {
-  background-color: transparent !important;
+  color: white !important;
 }
 
+/* Makes reply button on message match message background on hover */
 .c-message__reply_bar:hover, .c-message__reply_bar_view_thread,
 .c-message__reply_bar_last_reply {
   background-color: inherit !important;
@@ -81,6 +90,19 @@
 .c-coachmark-anchor, .workspace__primary_view_footer {
   background-color: rgb(29, 29, 29) !important;
   padding-top: 5px !important;
+}
+
+.c-scrollbar__hider::before, .c-message_list__day_divider__label__pill {
+  background-color: rgb(29, 29, 29) !important;
+  color: white;
+}
+
+.c-message_list__day_divider__line {
+  border: 1px solid rgb(29, 29, 29) !important;
+}
+
+.p-classic_nav__right_header.p-classic_nav__right_header--context_pane {
+  border-bottom: 1px solid white;
 }
 
 .p-classic_nav__channel_header, .p-workspace__top_nav, .p-classic_nav__model__title__name--dim {
@@ -173,6 +195,7 @@
   padding: 10px 0 10px 20px;
   font-weight: bold;
   background-color: rgb(143, 143, 143);
+  border: 1px solid transparent;
 }
 
 .blocked-message:hover {

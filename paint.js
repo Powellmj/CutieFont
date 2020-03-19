@@ -89,7 +89,7 @@ const colors = {
   85:'rgb(102, 153, 115)',
   86:'rgb(102, 153, 128)',
   87:'rgb(102, 153, 140)',
-  88:'rgb(102, 153, 153)',
+  88:'rgb(251, 255, 188)',
   89:'rgb(102, 140, 153)',
   90:'rgb(102, 128, 153)',
   91:'rgb(102, 115, 153)',
@@ -110,21 +110,21 @@ let colorIds = {
 };
 loadIds();
 
-var setup = setInterval(function () {
+let setup = setInterval(function () {
   setupMainObserver();
   setupSecondaryObserver();
   paintMessages();
 }, 1);
 
 function paintMessages(block = false) {
-  var colorId = null;
-  var userId = null;
-  var stateChange = false;
-  var messages = Array.from(document.querySelectorAll(".c-virtual_list__item"))
+  let colorId = null;
+  let userId = null;
+  let stateChange = false;
+  let messages = Array.from(document.querySelectorAll(".c-virtual_list__item"))
     .filter(message => message.innerHTML.includes("c-message_kit__background"))
 
   messages.forEach((message, idx) => {
-    var messageId = message.getAttribute("id").split('.')[0]
+    let messageId = message.getAttribute("id").split('.')[0]
     if (message.firstChild.getAttribute("data-user") && !block) {
     } else if (messageId in colorIds) {
       tagMessage(message, colorIds[messageId] === 0 ? colorIds[messageId] : colorId, colorIds[messageId]);
@@ -163,7 +163,10 @@ function loadIds() {
 }
 
 function tagUser(userId, message) {
-  if (message.querySelector(".c-message__sender_link").innerHTML === document.querySelector('.p-classic_nav__team_header__user__name__truncate').innerHTML) {
+  let username = document.querySelector('.p-classic_nav__team_header__user__name__truncate').innerHTML
+  let messageUsername = message.querySelector(".c-message__sender_link").innerHTML
+
+  if (messageUsername === username) {
     return colorIds[userId] = '101'
   }
   if (colorIds[userId] === 0) {
@@ -183,7 +186,7 @@ function findUserId(messages, idx) {
 }
 
 function tagMessage(message, colorNumber = null, userId = null) {
-  var messageId = message.getAttribute("id").split('.')[0]
+  let messageId = message.getAttribute("id").split('.')[0]
   if (colorNumber && userId) {
     message.firstChild.setAttribute("data-user", userId);
     message.firstChild.setAttribute("style", `background-color: ${colors[colorNumber]};`);
@@ -193,7 +196,7 @@ function tagMessage(message, colorNumber = null, userId = null) {
     message.firstChild.setAttribute("style", `background-color: ${colors[colorIds[userId]]};`);
     colorIds[messageId] = userId
   } else if (colorIds[userId] === 0 || colorNumber === 0) {
-    message.firstChild.setAttribute("data-user", 'xMessage');
+    message.firstChild.setAttribute("data-user", userId);
     message.firstChild.setAttribute("style", 'display: none !important;');
     blockedMessage(message)
   }
@@ -202,12 +205,12 @@ function tagMessage(message, colorNumber = null, userId = null) {
 
 function addButtons(node) {
   if (document.querySelector('.c-message_actions__container')) {
-    var node1 = document.createElement("Button");
+    let node1 = document.createElement("Button");
     node1.setAttribute('x-message-id', `${node.parentNode.parentNode.parentNode.getAttribute("id").split('.')[0]}`)
     node1.className = "xButton c-icon c-icon--times c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
     document.querySelector('.c-message_actions__container').appendChild(node1)
 
-    var node2 = document.createElement("Button");
+    let node2 = document.createElement("Button");
     node2.setAttribute('block-message-id', `${node.parentNode.parentNode.getAttribute("data-user")}`)
     node2.innerHTML = "Block"
     node2.className = "blockButton c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
@@ -223,14 +226,14 @@ function xButton(button) {
 }
 
 function blockButton(button) {
-  var parent = button.getAttribute('block-message-id')
-  colorIds[parent] = 0
+  let userId = button.getAttribute('block-message-id')
+  colorIds[userId] = 0
   saveColorIds(colorIds)
   paintMessages(true);
 }
 
 function revealTarget(button) {
-  var parent = button.parentNode.parentNode.getAttribute("id").split('.')[0]
+  let parent = button.parentNode.parentNode.getAttribute("id").split('.')[0]
   button.parentNode.parentNode.removeChild(button.parentNode)
   colorIds[parent] = 'revealed'
   colorIds['revealed'] = 102
@@ -241,12 +244,12 @@ function revealTarget(button) {
 function blockedMessage(message) {
   if (!(message.querySelector('.blocked-message'))) {
     let author = message.querySelector(".c-message__sender_link").innerHTML
-    var node1 = document.createElement("Div");
+    let node1 = document.createElement("Div");
     node1.innerHTML = `This message by ${author} was ignored.  `
     node1.className = "blocked-message"
     message.appendChild(node1)
 
-    var node2 = document.createElement("Button");
+    let node2 = document.createElement("Button");
     node2.innerHTML = "(Click here to show the message)"
     node2.className = "blocked-message-button"
     node1.appendChild(node2)
