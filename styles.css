@@ -3,33 +3,19 @@
   display: block !important;
   width: 70% !important;
   float: left !important;
-  border-radius: 20px !important;
-  margin: 3px 0 !important;
+  border-radius: 20px;
+  margin: 3px 0;
   margin-left: 5px !important;
-  padding: 10px 0 !important;
-  font-weight: bold !important;
+  padding: 10px 0;
   border: 1px solid transparent;
 }
 
-/* Hover for messages */
-.c-message_kit__background:hover {
-  margin-left: 15px !important;
-  border: 1px solid white;
-  transition: .2s;
-}
 
 /* Default formatting of current user's messages */
-[data-user='UN65PKSPR'] {
+[data-user='UN65PKSPR'], [data-user='UN65PKSPR.1'], [data-user='UN65PKSPR.2'], [data-user='UN65PKSPR.3'] {
   background-color: cadetblue !important;
   float: right !important;
   margin-right: 5px !important;
-}
-
-/* Hover for current user's messages */
-[data-user='UN65PKSPR']:hover {
-  margin-right: 15px !important;
-  border: 1px solid white;
-  transition: .2s;
 }
 
 /* Makes message index's background color dark */
@@ -38,10 +24,22 @@
 }
 
 /* Makes threads replies stand out on dark background */
-.p-threads_flexpane__separator_count {
+.p-threads_flexpane__separator_count, .c-fullscreen_modal__body__content.c-fullscreen_modal__body__content--full_bleed, .p-file_viewer__header__meta__name, .p-file_viewer__header__meta__stack .c-timestamp__label {
   background-color: rgb(49, 49, 49) !important;
   background-image: inherit !important;
   color: rgb(255, 255, 255) !important;
+}
+
+.c-icon.c-icon--arrow-large-left, .c-icon.c-icon--arrow-large-right {
+  color: black;
+}
+
+.c-fullscreen_modal__body.p-file_viewer__body.c-fullscreen_modal__body--full_bleed {
+  border-right: none !important;
+}
+
+.p-image_viewer__image {
+  border: 1px solid gray;
 }
 
 /* Makes thread banner and various other banners blue and text stand out */
@@ -55,7 +53,7 @@
 }
 
 /* Makes close icon stand out on dark background */
-.c-icon--times {
+.c-icon--times, .c-unified_member__display-name.c-unified_member__display-name--large, .c-unified_member__title.c-unified_member__title--large {
   color: white !important;
 }
 
@@ -68,6 +66,11 @@
 
 .c-link, .c-message__body--automated, .c-link.c-member_slug.c-member_slug--light.c-member_slug--link {
   color: rgb(0, 61, 117);
+  font-weight: bold;
+}
+
+.c-link.c-member_slug.c-member_slug--light.c-member_slug--link, .p-message_pane__foreword__description .c-link {
+  color: rgb(36, 149, 255);
   font-weight: bold;
 }
 
@@ -121,6 +124,10 @@
   border:rgb(214, 214, 214) solid 1px !important;
 }
 
+.c-mrkdwn__code {
+  background-color: rgba(255, 255, 255, 0.76) !important;
+}
+
 .p-context_bar {
   background-color: rgba(29, 29, 29, 0) !important;
 }
@@ -146,11 +153,11 @@
   color: rgb(214, 214, 214) !important;
 }
 
-.c-message_kit__hover.c-message_kit__message.p-activity_flexpane__item .p-rich_text_section {
+.c-message_kit__hover.c-message_kit__message.p-activity_flexpane__item .p-rich_text_section, .p-message_pane__foreword__title {
   color: white !important;
 }
 
-.p-rich_text_section, .c-message__sender_link, .c-timestamp__label {
+.p-rich_text_section, .c-message__sender_link, .c-timestamp__label, .c-message_kit__gutter__right .c-message__body.c-message__body--automated {
   color: black !important;
 }
 
@@ -195,12 +202,12 @@
   padding: 10px 0 10px 20px;
   font-weight: bold;
   background-color: rgb(143, 143, 143);
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
 }
 
 .blocked-message:hover {
   margin-left: 15px;
-  border: 1px solid white;
+  /* border: 1px solid white; */
   transition: .2s;
 }
 

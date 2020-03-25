@@ -125,7 +125,7 @@ function paintMessages(block = false) {
 
   messages.forEach((message, idx) => {
     let messageId = message.getAttribute("id").split('.')[0]
-    if (message.firstChild.getAttribute("data-user") && !block) {
+    if (message.firstChild.getAttribute("data-user") && message.firstChild.getAttribute("data-user").split('.')[1] && !block) {
     } else if (messageId in colorIds) {
       tagMessage(message, colorIds[messageId] === 0 ? colorIds[messageId] : colorId, colorIds[messageId]);
     } else {
@@ -139,6 +139,7 @@ function paintMessages(block = false) {
         stateChange = tagMessage(message, colorId, userId);
       }
     }
+    shapeBubbles(messages, idx);
   });
   if (stateChange) { 
     saveColorIds(colorIds) 
@@ -167,7 +168,7 @@ function tagUser(userId, message) {
   let messageUsername = message.querySelector(".c-message__sender_link").innerHTML
 
   if (messageUsername === username) {
-    return colorIds[userId] = '101'
+    return colorIds[userId] = 101
   }
   if (colorIds[userId] === 0) {
     return colorIds[userId]
@@ -179,9 +180,81 @@ function findUserId(messages, idx) {
   if (idx === 0) { return null }
   let userId = messages[idx].firstChild.getAttribute("data-user")
   if (userId) {
-    return userId
+    return userId.split(".")[0];
   } else {
     return findUserId(messages, idx - 1)
+  }
+}
+
+function shapeBubbles(messages, idx) {
+  let prevMessage = messages[idx - 1];
+  let message = messages[idx];
+  let nextMessage = messages[idx + 1];
+
+  if (message.firstChild.getAttribute("data-user")) {
+    if (
+      !(message.innerHTML.includes("message_sender_name"))
+      && nextMessage 
+      && prevMessage 
+      && !(nextMessage.innerHTML.includes("message_sender_name"))
+      && nextMessage.firstChild.getAttribute("data-user") 
+      && prevMessage.firstChild.getAttribute("data-user") 
+      && nextMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0] 
+      && prevMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0]) {
+      if (message.firstChild.getAttribute("data-user").split(".")[1]) {
+        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user").slice(0, -2) + ".2")
+      } else {
+        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user") + ".2")
+      }
+      if (!(prevMessage.firstChild.getAttribute("data-user").split(".")[1])) {
+        shapeBubbles(messages, idx - 1)
+      }
+    } else if (
+      !(message.innerHTML.includes("message_sender_name"))
+      && prevMessage 
+      && prevMessage.firstChild.getAttribute("data-user")
+      && prevMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0]) {
+      if (message.firstChild.getAttribute("data-user").split(".")[1]) {
+        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user").slice(0, -2) + ".3")
+      } else {
+        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user") + ".3")
+      }
+      if (!(prevMessage.firstChild.getAttribute("data-user").split(".")[1])) {
+        shapeBubbles(messages, idx - 1)
+      } else if (prevMessage.firstChild.getAttribute("data-user").split(".")[1] === ".3") {
+        shapeBubbles(messages, idx - 1)
+      }
+    } else if (
+      nextMessage 
+      && !(nextMessage.innerHTML.includes("message_sender_name"))
+      && nextMessage.firstChild.getAttribute("data-user")
+      && nextMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0]) {
+      if (message.firstChild.getAttribute("data-user").split(".")[1]) {
+        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user").slice(0, -2) + ".1")
+      } else {
+        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user") + ".1")
+      }
+    }
+  }
+
+  if (message.firstChild.getAttribute("data-user")) {
+    if (message.firstChild.getAttribute("data-user").split('.')[1] === "1") {
+      message.firstChild.style.borderBottomRightRadius = '0px';
+      message.firstChild.style.borderBottomLeftRadius = '0px';
+      message.firstChild.style.marginBottom = '0px';
+      message.firstChild.style.paddingBottom = '0px';
+    } else if (message.firstChild.getAttribute("data-user").split('.')[1] === "2") {
+      message.firstChild.style.borderRadius = '0px';
+      message.firstChild.style.marginBottom = '0px';
+      message.firstChild.style.marginTop = '0px';
+      message.firstChild.style.paddingBottom = '0px';
+      message.firstChild.style.paddingTop = '0px';
+    } else if (message.firstChild.getAttribute("data-user").split('.')[1] === "3") {
+      message.firstChild.style.borderTopLeftRadius = '0px';
+      message.firstChild.style.borderTopRightRadius = '0px';
+      message.firstChild.style.marginTop = '0px';
+      message.firstChild.style.paddingTop = '0px';
+    }
   }
 }
 
@@ -189,15 +262,15 @@ function tagMessage(message, colorNumber = null, userId = null) {
   let messageId = message.getAttribute("id").split('.')[0]
   if (colorNumber && userId) {
     message.firstChild.setAttribute("data-user", userId);
-    message.firstChild.setAttribute("style", `background-color: ${colors[colorNumber]};`);
+    message.firstChild.style.backgroundColor = `${colors[colorNumber]}`;
     colorIds[messageId] = userId
   } else if (userId && colorNumber !== 0 && colorIds[userId] !== 0) {
     message.firstChild.setAttribute("data-user", userId);
-    message.firstChild.setAttribute("style", `background-color: ${colors[colorIds[userId]]};`);
+    message.firstChild.style.backgroundColor = `${colors[colorIds[userId.split('.')[0]]]}`;
     colorIds[messageId] = userId
   } else if (colorIds[userId] === 0 || colorNumber === 0) {
-    message.firstChild.setAttribute("data-user", userId);
-    message.firstChild.setAttribute("style", 'display: none !important;');
+    message.firstChild.setAttribute("data-user", userId.split('.')[0]);
+    message.firstChild.setAttribute("style", 'display: none !important');
     blockedMessage(message)
   }
   return true;
