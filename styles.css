@@ -12,10 +12,32 @@
 
 
 /* Default formatting of current user's messages */
-[data-user='UN65PKSPR'], [data-user='UN65PKSPR.1'], [data-user='UN65PKSPR.2'], [data-user='UN65PKSPR.3'] {
+[data-current-user='true'] {
   background-color: cadetblue !important;
   float: right !important;
   margin-right: 5px !important;
+}
+
+[data-bubble='1'] {
+  border-bottom-right-radius: 0px !important; 
+  border-bottom-left-radius: 0px !important; 
+  margin-bottom: 0px !important; 
+  padding-bottom: 0px !important;
+}
+
+[data-bubble='2'] {
+  border-radius: 0px !important; 
+  margin-bottom: 0px !important; 
+  margin-top: 0px !important; 
+  padding-bottom: 0px !important; 
+  padding-top: 0px !important;
+}
+
+[data-bubble='3'] {
+  border-top-right-radius: 0px !important; 
+  border-top-left-radius: 0px !important; 
+  margin-top: 0px !important; 
+  padding-top: 0px !important;
 }
 
 /* Makes message index's background color dark */
@@ -45,15 +67,31 @@
 /* Makes thread banner and various other banners blue and text stand out */
 .p-message_pane__limited_history_foreword, 
 .p-message_pane__limited_history_foreword div, 
-.p-flexpane_header, .p-threads_flexpane__header_channel_name, .p-workspace__secondary_view_contents .c-icon--times {
+.p-flexpane_header, .p-threads_flexpane__header_channel_name, .p-workspace__secondary_view_contents .c-icon--times, .p-top_nav,
+.p-ia__sidebar_header--top-nav.p-ia__sidebar_header__button, .p-ia__sidebar_header, .p-channel_sidebar--iap1 .p-channel_sidebar__section_heading {
   background-color: rgb(3, 57, 94) !important;
   background-image: inherit !important;
   border-top: none;
   color: white !important;
 }
 
+.p-top_nav__search {
+  background-color: rgb(2, 72, 119) !important;
+  box-shadow: inset 0 0 0 1px rgb(2, 72, 119) !important;
+}
+
+.p-ia__sidebar_header--top-nav .p-ia__sidebar_header__button, .p-channel_sidebar--iap1 .p-channel_sidebar__divider, .p-top_nav {
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.1) !important;
+  border-color: transparent !important;
+}
+
+.c-texty_input.c-texty_input--double_decker.focus:after {
+  background-color: transparent !important;
+}
+
 /* Makes close icon stand out on dark background */
-.c-icon--times, .c-unified_member__display-name.c-unified_member__display-name--large, .c-unified_member__title.c-unified_member__title--large {
+.c-icon--times, .c-unified_member__display-name.c-unified_member__display-name--large, .c-unified_member__title.c-unified_member__title--large, 
+ .c-icon.p-ia__view_header__button_icon.c-icon--info-circle, .p-ia__view_header__button_text {
   color: white !important;
 }
 
@@ -95,9 +133,14 @@
   padding-top: 5px !important;
 }
 
-.c-scrollbar__hider::before, .c-message_list__day_divider__label__pill {
+.c-scrollbar__hider::before, .c-message_list__day_divider__label__pill, .p-message_pane--classic-nav .p-global_banner, 
+.p-global_banner__heading_text {
   background-color: rgb(29, 29, 29) !important;
   color: white;
+}
+
+.p-global_banner--persistent {
+  border-bottom: none !important;
 }
 
 .c-message_list__day_divider__line {
@@ -108,7 +151,7 @@
   border-bottom: 1px solid white;
 }
 
-.p-classic_nav__channel_header, .p-workspace__top_nav, .p-classic_nav__model__title__name--dim {
+.p-classic_nav__channel_header, .p-workspace__top_nav, .p-classic_nav__model__title__name--dim, .p-ia__view_header:not(.p-ia__view_header--with-history) {
   background-color: rgb(29, 29, 29) !important;
   color: rgb(214, 214, 214) !important;
 }
@@ -202,13 +245,6 @@
   padding: 10px 0 10px 20px;
   font-weight: bold;
   background-color: rgb(143, 143, 143);
-  /* border: 1px solid transparent; */
-}
-
-.blocked-message:hover {
-  margin-left: 15px;
-  /* border: 1px solid white; */
-  transition: .2s;
 }
 
 .blocked-message-button {

@@ -1,7 +1,6 @@
 'use strict';
 
 const colors = {
-  0:'cadetblue',
   1:'rgb(255, 153, 153)',
   2:'rgb(255, 179, 153)',
   3:'rgb(255, 204, 153)',
@@ -102,12 +101,12 @@ const colors = {
   98:'rgb(153, 102, 128)',
   99:'rgb(153, 102, 115)',
   100:'rgb(153, 102, 102)',
-  102:'rgb(143, 143, 143)'
+  102:'rgb(143, 143, 143)',
+  "Blocked": 'rgb(0, 0, 0)'
 }
 
 // chrome.storage.sync.clear()
-let colorIds = {
-};
+let colorIds = {};
 loadIds();
 
 let setup = setInterval(function () {
@@ -116,40 +115,28 @@ let setup = setInterval(function () {
   paintMessages();
 }, 1);
 
-function paintMessages(block = false) {
-  let colorId = null;
+function paintMessages() {
   let userId = null;
-  let stateChange = false;
   let messages = Array.from(document.querySelectorAll(".c-virtual_list__item"))
-    .filter(message => message.innerHTML.includes("c-message_kit__background"))
+    .filter(message => message.innerHTML.includes("c-message_kit__background"));
 
   messages.forEach((message, idx) => {
-    let messageId = message.getAttribute("id").split('.')[0]
-    if (message.firstChild.getAttribute("data-user") && message.firstChild.getAttribute("data-user").split('.')[1] && !block) {
-    } else if (messageId in colorIds) {
-      tagMessage(message, colorIds[messageId] === 0 ? colorIds[messageId] : colorId, colorIds[messageId]);
+    let messageId = message.getAttribute("id")
+    if (messageId in colorIds) {
+    } else if (message.innerHTML.includes("message_sender_name")) {
+      userId = message.querySelector(".c-message__sender_link").getAttribute('data-message-sender') || 'bot'
     } else {
-      if (message.innerHTML.includes("message_sender_name")) {
-        userId = message.querySelector(".c-message__sender_link").getAttribute('data-message-sender') || 'bot'
-
-        colorId = colorIds[userId] || tagUser(userId, message)
-        stateChange = tagMessage(message, colorId, userId);
-      } else {
-        userId = userId || findUserId(messages, idx);
-        stateChange = tagMessage(message, colorId, userId);
-      }
+      userId = userId || findUserId(messages, idx);
     }
+    tagMessage(message, messageId, userId);
     shapeBubbles(messages, idx);
   });
-  if (stateChange) { 
-    saveColorIds(colorIds) 
-  }
 }
 
 function saveColorIds(colorIds) {
-  chrome.storage.sync.set(colorIds, function() {
+  chrome.storage.sync.set(colorIds, () => {
     if (chrome.runtime.lastError) {
-      chrome.storage.sync.remove(Object.keys(colorIds).slice(0, 30), function() {
+      chrome.storage.sync.remove(Object.keys(colorIds).slice(0, 30), () => {
       })
     }
   });
@@ -157,30 +144,30 @@ function saveColorIds(colorIds) {
   }
 
 function loadIds() {
-  chrome.storage.sync.get(null, function (syncedColorIds) {
+  chrome.storage.sync.get(null, (syncedColorIds) => {
     colorIds = syncedColorIds;
     console.log(colorIds)
   }) 
 }
 
 function tagUser(userId, message) {
-  let username = document.querySelector('.p-classic_nav__team_header__user__name__truncate').innerHTML
+  let currentUserUsername = document.querySelector('.p-ia__sidebar_header__user__name').innerHTML
   let messageUsername = message.querySelector(".c-message__sender_link").innerHTML
 
-  if (messageUsername === username) {
-    return colorIds[userId] = 101
+  if (messageUsername === currentUserUsername) {
+    colorIds[userId] = 101
+  } else {
+    colorIds[userId] = Math.ceil(Math.random() * 100)
   }
-  if (colorIds[userId] === 0) {
-    return colorIds[userId]
-  }
-  return colorIds[userId] = Math.ceil(Math.random() * 100)
+  saveColorIds(colorIds)
+  return colorIds[userId]
 }
 
 function findUserId(messages, idx) {
   if (idx === 0) { return null }
   let userId = messages[idx].firstChild.getAttribute("data-user")
   if (userId) {
-    return userId.split(".")[0];
+    return userId;
   } else {
     return findUserId(messages, idx - 1)
   }
@@ -188,98 +175,63 @@ function findUserId(messages, idx) {
 
 function shapeBubbles(messages, idx) {
   let prevMessage = messages[idx - 1];
+  let prevMessageUserId = prevMessage ? prevMessage.firstChild.getAttribute("data-user") : null;
   let message = messages[idx];
+  let messageUserId = message.firstChild.getAttribute("data-user");
   let nextMessage = messages[idx + 1];
+  let nextMessageUserId = nextMessage ? nextMessage.firstChild.getAttribute("data-user") : null;
 
-  if (message.firstChild.getAttribute("data-user")) {
-    if (
-      !(message.innerHTML.includes("message_sender_name"))
-      && nextMessage 
-      && prevMessage 
-      && !(nextMessage.innerHTML.includes("message_sender_name"))
-      && nextMessage.firstChild.getAttribute("data-user") 
-      && prevMessage.firstChild.getAttribute("data-user") 
-      && nextMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0] 
-      && prevMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0]) {
-      if (message.firstChild.getAttribute("data-user").split(".")[1]) {
-        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user").slice(0, -2) + ".2")
-      } else {
-        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user") + ".2")
-      }
-      if (!(prevMessage.firstChild.getAttribute("data-user").split(".")[1])) {
+  if (messageUserId) {
+    if (nextMessageUserId === messageUserId && prevMessageUserId === messageUserId
+      && !(nextMessage.innerHTML.includes("message_sender_name")) && !(message.innerHTML.includes("message_sender_name"))) {
+        message.firstChild.setAttribute("data-bubble", "2")
+      if (prevMessage.firstChild.getAttribute("data-bubble") !== "1") {
         shapeBubbles(messages, idx - 1)
       }
-    } else if (
-      !(message.innerHTML.includes("message_sender_name"))
-      && prevMessage 
-      && prevMessage.firstChild.getAttribute("data-user")
-      && prevMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0]) {
-      if (message.firstChild.getAttribute("data-user").split(".")[1]) {
-        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user").slice(0, -2) + ".3")
-      } else {
-        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user") + ".3")
-      }
-      if (!(prevMessage.firstChild.getAttribute("data-user").split(".")[1])) {
-        shapeBubbles(messages, idx - 1)
-      } else if (prevMessage.firstChild.getAttribute("data-user").split(".")[1] === ".3") {
+    } else if (prevMessageUserId === messageUserId && !(message.innerHTML.includes("message_sender_name"))) {
+      message.firstChild.setAttribute("data-bubble", "3")
+      if (prevMessage.firstChild.getAttribute("data-bubble") === "3") {
         shapeBubbles(messages, idx - 1)
       }
-    } else if (
-      nextMessage 
-      && !(nextMessage.innerHTML.includes("message_sender_name"))
-      && nextMessage.firstChild.getAttribute("data-user")
-      && nextMessage.firstChild.getAttribute("data-user").split(".")[0] === message.firstChild.getAttribute("data-user").split(".")[0]) {
-      if (message.firstChild.getAttribute("data-user").split(".")[1]) {
-        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user").slice(0, -2) + ".1")
-      } else {
-        message.firstChild.setAttribute("data-user", message.firstChild.getAttribute("data-user") + ".1")
-      }
-    }
-  }
-
-  if (message.firstChild.getAttribute("data-user")) {
-    if (message.firstChild.getAttribute("data-user").split('.')[1] === "1") {
-      message.firstChild.style.borderBottomRightRadius = '0px';
-      message.firstChild.style.borderBottomLeftRadius = '0px';
-      message.firstChild.style.marginBottom = '0px';
-      message.firstChild.style.paddingBottom = '0px';
-    } else if (message.firstChild.getAttribute("data-user").split('.')[1] === "2") {
-      message.firstChild.style.borderRadius = '0px';
-      message.firstChild.style.marginBottom = '0px';
-      message.firstChild.style.marginTop = '0px';
-      message.firstChild.style.paddingBottom = '0px';
-      message.firstChild.style.paddingTop = '0px';
-    } else if (message.firstChild.getAttribute("data-user").split('.')[1] === "3") {
-      message.firstChild.style.borderTopLeftRadius = '0px';
-      message.firstChild.style.borderTopRightRadius = '0px';
-      message.firstChild.style.marginTop = '0px';
-      message.firstChild.style.paddingTop = '0px';
+    } else if (nextMessageUserId === messageUserId && !(nextMessage.innerHTML.includes("message_sender_name"))) {
+      message.firstChild.setAttribute("data-bubble", "1")
     }
   }
 }
 
-function tagMessage(message, colorNumber = null, userId = null) {
-  let messageId = message.getAttribute("id").split('.')[0]
-  if (colorNumber && userId) {
-    message.firstChild.setAttribute("data-user", userId);
-    message.firstChild.style.backgroundColor = `${colors[colorNumber]}`;
+function tagMessage(message, messageId = null, userId = null) {
+  messageId = message.getAttribute("id");
+  let userColor = null;
+
+  if (messageId in colorIds) {
+    userId = colorIds[messageId]
+    userColor = colorIds[userId]
+  } else if (userId) {
     colorIds[messageId] = userId
-  } else if (userId && colorNumber !== 0 && colorIds[userId] !== 0) {
-    message.firstChild.setAttribute("data-user", userId);
-    message.firstChild.style.backgroundColor = `${colors[colorIds[userId.split('.')[0]]]}`;
-    colorIds[messageId] = userId
-  } else if (colorIds[userId] === 0 || colorNumber === 0) {
-    message.firstChild.setAttribute("data-user", userId.split('.')[0]);
-    message.firstChild.setAttribute("style", 'display: none !important');
-    blockedMessage(message)
+    userColor = colorIds[userId] || tagUser(userId, message)
+    saveColorIds(colorIds)
+  } else if (!userId) {
+    return null
   }
-  return true;
+  if (colorIds[userId] === 101) {
+    message.firstChild.setAttribute("data-current-user", 'true');
+  }
+  if (colorIds[userId] === "Blocked" || colorIds[messageId] === "Blocked") {
+    message.firstChild.setAttribute("data-user", userId);
+    message.firstChild.setAttribute("style", 'display: none !important');
+    return blockedMessage(message)
+  }
+  if (colorIds[userId] === "revealed" || colorIds[messageId] === "revealed") {
+    message.firstChild.setAttribute("style", 'display: inline-block !important');
+  }
+  message.firstChild.setAttribute("data-user", userId);
+  message.firstChild.style.backgroundColor = `${colors[userColor]}`;
 }
 
 function addButtons(node) {
   if (document.querySelector('.c-message_actions__container')) {
     let node1 = document.createElement("Button");
-    node1.setAttribute('x-message-id', `${node.parentNode.parentNode.parentNode.getAttribute("id").split('.')[0]}`)
+    node1.setAttribute('x-message-id', `${node.parentNode.parentNode.parentNode.getAttribute("id")}`)
     node1.className = "xButton c-icon c-icon--times c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
     document.querySelector('.c-message_actions__container').appendChild(node1)
 
@@ -293,32 +245,34 @@ function addButtons(node) {
 
 function xButton(button) {
   let ignoredMessageId = button.getAttribute('x-message-id')
-  colorIds[ignoredMessageId] = 0
+  console.log(ignoredMessageId)
+  colorIds[ignoredMessageId] = "Blocked"
+  console.log(colorIds[ignoredMessageId])
   saveColorIds(colorIds)
-  paintMessages(true);
+  paintMessages();
 }
 
 function blockButton(button) {
   let userId = button.getAttribute('block-message-id')
   colorIds[userId] = 0
   saveColorIds(colorIds)
-  paintMessages(true);
+  paintMessages();
 }
 
 function revealTarget(button) {
-  let parent = button.parentNode.parentNode.getAttribute("id").split('.')[0]
+  let parent = button.parentNode.parentNode.getAttribute("id")
   button.parentNode.parentNode.removeChild(button.parentNode)
   colorIds[parent] = 'revealed'
   colorIds['revealed'] = 102
   saveColorIds(colorIds)
-  paintMessages(true);
+  paintMessages();
 }
 
 function blockedMessage(message) {
   if (!(message.querySelector('.blocked-message'))) {
-    let author = message.querySelector(".c-message__sender_link").innerHTML
+    // let author = message.querySelector(".c-message__sender_link").innerHTML
     let node1 = document.createElement("Div");
-    node1.innerHTML = `This message by ${author} was ignored.  `
+    // node1.innerHTML = `This message by ${author} was ignored.  `
     node1.className = "blocked-message"
     message.appendChild(node1)
 
