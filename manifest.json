@@ -3,6 +3,11 @@
   "name": "CutieFont",
   "description": "Hey, Listen!",
   "version": "0.7",
+  "icons": {
+    "16": "./images/thumb16.png",
+    "48": "./images/thumb48.png",
+    "128": "./images/thumb128.png"
+  },
   "permissions": [
     "tabs",
     "<all_urls>",
@@ -15,7 +20,7 @@
         "js": ["paint.js", "observer.js"]
       }],
   "browser_action": {
-    "default_icon": "./images/navi.png",
+    "default_icon": "./images/thumb16.png",
     "default_popup": "popup.html"
   }
 }

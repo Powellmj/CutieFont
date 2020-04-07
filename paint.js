@@ -1,107 +1,94 @@
 'use strict';
 
 const colors = {
-  1:'rgb(255, 153, 153)',
-  2:'rgb(255, 179, 153)',
-  3:'rgb(255, 204, 153)',
-  4:'rgb(255, 230, 153)',
-  5:'rgb(255, 255, 153)',
-  6:'rgb(230, 255, 153)',
-  7:'rgb(204, 255, 153)',
-  8:'rgb(179, 255, 153)',
-  9:'rgb(153, 255, 153)',
-  10:'rgb(153, 255, 179)',
-  11:'rgb(153, 255, 204)',
-  12:'rgb(153, 255, 230)',
-  13:'rgb(153, 255, 255)',
-  14:'rgb(153, 230, 255)',
-  15:'rgb(153, 204, 255)',
-  16:'rgb(153, 179, 255)',
-  17:'rgb(153, 153, 255)',
-  18:'rgb(179, 153, 255)',
-  19:'rgb(204, 153, 255)',
-  20:'rgb(230, 153, 255)',
-  21:'rgb(255, 153, 255)',
-  22:'rgb(255, 153, 230)',
-  23:'rgb(255, 153, 204)',
-  24:'rgb(255, 153, 179)',
-  25:'rgb(255, 153, 153)',
-  26:'rgb(255, 102, 102)',
-  27:'rgb(255, 140, 102)',
-  28:'rgb(255, 179, 102)',
-  29:'rgb(255, 217, 102)',
-  30:'rgb(255, 255, 102)',
-  31:'rgb(217, 255, 102)',
-  32:'rgb(179, 255, 102)',
-  33:'rgb(153, 255, 102)',
-  34:'rgb(140, 255, 102)',
-  35:'rgb(102, 255, 102)',
-  36:'rgb(102, 255, 140)',
-  37:'rgb(102, 255, 179)',
-  38:'rgb(102, 255, 217)',
-  39:'rgb(102, 255, 255)',
-  40:'rgb(102, 217, 255)',
-  41:'rgb(102, 179, 255)',
-  42:'rgb(102, 140, 255)',
-  43:'rgb(102, 102, 255)',
-  44:'rgb(140, 102, 255)',
-  45:'rgb(179, 102, 255)',
-  46:'rgb(217, 102, 255)',
-  47:'rgb(255, 102, 255)',
-  48:'rgb(255, 102, 217)',
-  49:'rgb(255, 102, 179)',
-  50:'rgb(255, 102, 140)',
-  51:'rgb(255, 102, 102)',
-  52:'rgb(255, 64, 0)',
-  53:'rgb(255, 128, 0)',
-  54:'rgb(255, 191, 0)',
-  55:'rgb(255, 255, 0)',
-  56:'rgb(191, 255, 0)',
-  57:'rgb(128, 255, 0)',
-  58:'rgb(64, 255, 0)',
-  59:'rgb(0, 255, 0)',
-  60:'rgb(0, 255, 64)',
-  61:'rgb(0, 255, 128)',
-  62:'rgb(0, 255, 191)',
-  63:'rgb(0, 255, 255)',
-  64:'rgb(0, 191, 255)',
-  65:'rgb(0, 128, 255)',
-  66:'rgb(0, 64, 255)',
-  67:'rgb(66, 66, 255)',
-  68:'rgb(204, 255, 255)',
-  69:'rgb(128, 0, 255)',
-  70:'rgb(191, 0, 255)',
-  71:'rgb(255, 0, 255)',
-  72:'rgb(255, 0, 191)',
-  73:'rgb(255, 0, 128)',
-  74:'rgb(255, 0, 64)',
-  75:'rgb(255, 0, 0)',
-  76:'rgb(153, 102, 102)',
-  77:'rgb(153, 115, 102)',
-  78:'rgb(153, 128, 102)',
-  79:'rgb(153, 140, 102)',
-  80:'rgb(153, 153, 102)',
-  81:'rgb(140, 153, 102)',
-  82:'rgb(128, 153, 102)',
-  83:'rgb(115, 153, 102)',
-  84:'rgb(102, 153, 102)',
-  85:'rgb(102, 153, 115)',
-  86:'rgb(102, 153, 128)',
-  87:'rgb(102, 153, 140)',
-  88:'rgb(251, 255, 188)',
-  89:'rgb(102, 140, 153)',
-  90:'rgb(102, 128, 153)',
-  91:'rgb(102, 115, 153)',
-  92:'rgb(102, 102, 153)',
-  93:'rgb(115, 102, 153)',
-  94:'rgb(128, 102, 153)',
-  95:'rgb(140, 102, 153)',
-  96:'rgb(153, 102, 153)',
-  97:'rgb(153, 102, 140)',
-  98:'rgb(153, 102, 128)',
-  99:'rgb(153, 102, 115)',
-  100:'rgb(153, 102, 102)',
-  102:'rgb(143, 143, 143)',
+  //blue
+  1:'#e6f2ff',
+  2:'#cce6ff',
+  3:'#b3d9ff',
+  4:'#99ccff',
+  5:'#80bfff',
+  6:'#4da6ff',
+  7:'#1a8cff',
+  8:'#0080ff',
+  9:'#0073e6',
+  10:'#0066cc',
+  // lightblue
+  11:'#e6f9ff',
+  12:'#ccf2ff',
+  13:'#b3ecff',
+  14:'#99e6ff',
+  15:'#80dfff',
+  16:'#4dd2ff',
+  17:'#1ac6ff',
+  18:'#00ace6',
+  19:'#0099cc',
+  20:'#0086b3',
+  //green
+  21:'#ebfaeb',
+  22:'#d6f5d6',
+  23:'#c2f0c2',
+  24:'#adebad',
+  25:'#99e699',
+  26:'#85e085',
+  27:'#5cd65c',
+  28:'#33cc33',
+  29:'#2eb82e',
+  30:'#29a329',
+  //yellow
+  31:'#ffffe6',
+  32:'#ffffcc',
+  33:'#ffffb3',
+  34:'#ffff99',
+  35:'#ffff80',
+  36:'#ffff66',
+  37:'#ffff33',
+  38:'#ffff00',
+  39:'#cccc00',
+  40:'#999900',
+  //orange
+  41:'#fff2e6',
+  42:'#ffe6cc',
+  43:'#ffd9b3',
+  44:'#ffcc99',
+  45:'#ffbf80',
+  46:'#ffb366',
+  47:'#ffa64d',
+  48:'#ff9933',
+  49:'#ff8c1a',
+  50:'#ff8000',
+  //red
+  51:'#ffe6e6',
+  52:'#ffcccc',
+  53:'#ffb3b3',
+  54:'#ff9999',
+  55:'#ff8080',
+  56:'#ff6666',
+  57:'#ff1a1a',
+  58:'#ff0000',
+  59:'#e60000',
+  60:'#cc0000',
+  //purple
+  61:'#ffe6f2',
+  62:'#ffcce6',
+  63:'#ffb3d9',
+  64:'#ff99cc',
+  65:'#ff80bf',
+  66:'#ff66b3',
+  67:'#ff4da6',
+  68:'#ff3399',
+  69:'#ff1a8c',
+  70:'#ff0080',
+  // deeper purple
+  71:'#ffe6ff',
+  72:'#ffccff',
+  73:'#ffb3ff',
+  74:'#ff99ff',
+  75:'#ff80ff',
+  76:'#ff33ff',
+  77:'#ff00ff',
+  78:'#e600e6',
+  79:'#cc00cc',
+  80:'#b300b3',
   "Blocked": 'rgb(0, 0, 0)'
 }
 
@@ -111,19 +98,18 @@ loadIds();
 
 let setup = setInterval(function () {
   setupMainObserver();
-  setupSecondaryObserver();
   paintMessages();
 }, 1);
 
 function paintMessages() {
   let userId = null;
   let messages = Array.from(document.querySelectorAll(".c-virtual_list__item"))
-    .filter(message => message.innerHTML.includes("c-message_kit__background"));
+    .filter(message => message.innerHTML.includes("c-message_kit__actions"));
 
   messages.forEach((message, idx) => {
     let messageId = message.getAttribute("id")
     if (messageId in colorIds) {
-    } else if (message.innerHTML.includes("message_sender_name")) {
+    } else if (message.innerHTML.includes("data-message-sender")) {
       userId = message.querySelector(".c-message__sender_link").getAttribute('data-message-sender') || 'bot'
     } else {
       userId = userId || findUserId(messages, idx);
@@ -151,14 +137,7 @@ function loadIds() {
 }
 
 function tagUser(userId, message) {
-  let currentUserUsername = document.querySelector('.p-ia__sidebar_header__user__name').innerHTML
-  let messageUsername = message.querySelector(".c-message__sender_link").innerHTML
-
-  if (messageUsername === currentUserUsername) {
-    colorIds[userId] = 101
-  } else {
-    colorIds[userId] = Math.ceil(Math.random() * 100)
-  }
+  colorIds[userId] = Math.ceil(Math.random() * 80)
   saveColorIds(colorIds)
   return colorIds[userId]
 }
@@ -185,23 +164,25 @@ function shapeBubbles(messages, idx) {
     if (nextMessageUserId === messageUserId && prevMessageUserId === messageUserId
       && !(nextMessage.innerHTML.includes("message_sender_name")) && !(message.innerHTML.includes("message_sender_name"))) {
         message.firstChild.setAttribute("data-bubble", "2")
-      if (prevMessage.firstChild.getAttribute("data-bubble") !== "1") {
+      if (prevMessage.firstChild.getAttribute("data-bubble") !== "1") { 
         shapeBubbles(messages, idx - 1)
       }
     } else if (prevMessageUserId === messageUserId && !(message.innerHTML.includes("message_sender_name"))) {
       message.firstChild.setAttribute("data-bubble", "3")
-      if (prevMessage.firstChild.getAttribute("data-bubble") === "3") {
-        shapeBubbles(messages, idx - 1)
-      }
+      shapeBubbles(messages, idx - 1)
     } else if (nextMessageUserId === messageUserId && !(nextMessage.innerHTML.includes("message_sender_name"))) {
       message.firstChild.setAttribute("data-bubble", "1")
     }
   }
 }
 
+let currentUserId = null;
 function tagMessage(message, messageId = null, userId = null) {
   messageId = message.getAttribute("id");
+  let currentUserUsername = document.querySelector('.p-ia__sidebar_header__user__name').innerHTML
+  let messageUsername = message.querySelector(".c-message__sender_link") ? message.querySelector(".c-message__sender_link").innerHTML : null
   let userColor = null;
+
 
   if (messageId in colorIds) {
     userId = colorIds[messageId]
@@ -213,72 +194,113 @@ function tagMessage(message, messageId = null, userId = null) {
   } else if (!userId) {
     return null
   }
-  if (colorIds[userId] === 101) {
-    message.firstChild.setAttribute("data-current-user", 'true');
+  let messageBody;
+  if (Array.from(message.firstChild.classList).includes('p-threads_view__default_background')) {
+    messageBody = message.firstChild.firstChild
+  } else if (Array.from(message.firstChild.classList).includes('c-message_kit__hover')) {
+    messageBody = message.firstChild.firstChild.firstChild
+  } else {
+    messageBody = message.firstChild
   }
-  if (colorIds[userId] === "Blocked" || colorIds[messageId] === "Blocked") {
-    message.firstChild.setAttribute("data-user", userId);
-    message.firstChild.setAttribute("style", 'display: none !important');
-    return blockedMessage(message)
-  }
-  if (colorIds[userId] === "revealed" || colorIds[messageId] === "revealed") {
-    message.firstChild.setAttribute("style", 'display: inline-block !important');
-  }
-  message.firstChild.setAttribute("data-user", userId);
-  message.firstChild.style.backgroundColor = `${colors[userColor]}`;
-}
 
-function addButtons(node) {
-  if (document.querySelector('.c-message_actions__container')) {
-    let node1 = document.createElement("Button");
-    node1.setAttribute('x-message-id', `${node.parentNode.parentNode.parentNode.getAttribute("id")}`)
-    node1.className = "xButton c-icon c-icon--times c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
-    document.querySelector('.c-message_actions__container').appendChild(node1)
-
-    let node2 = document.createElement("Button");
-    node2.setAttribute('block-message-id', `${node.parentNode.parentNode.getAttribute("data-user")}`)
-    node2.innerHTML = "Block"
-    node2.className = "blockButton c-button-unstyled c-icon_button c-icon_button--light c-icon_button--size_medium p-flexpane_header__control"
-    document.querySelector('.c-message_actions__container').appendChild(node2)
+  messageBody.setAttribute("style", 'display: inline-block !important');
+  if (messageUsername === currentUserUsername) {
+    currentUserId = userId
+    colorIds['currentUser'] = userId
+    messageBody.setAttribute("data-current-user", 'true');
+  }
+  if (`${colorIds[userId]}`.split('~')[1] || colorIds[messageId].split('~')[1]) {
+    messageBody.setAttribute("data-user", userId);
+    messageBody.setAttribute("style", 'display: none !important');
+    blockedMessage(message)
+  }
+  messageBody.setAttribute("data-user", userId);
+  messageBody.style.backgroundColor = `${colors[userColor]}`;
+  if (currentUserId === userId) {
+    messageBody.setAttribute("data-current-user", 'true'); 
   }
 }
 
-function xButton(button) {
-  let ignoredMessageId = button.getAttribute('x-message-id')
-  console.log(ignoredMessageId)
-  colorIds[ignoredMessageId] = "Blocked"
-  console.log(colorIds[ignoredMessageId])
-  saveColorIds(colorIds)
-  paintMessages();
-}
+function changeUserColorButtons() {
+  if (document.querySelector('.colorButtons')) {
+    document.querySelector('.colorButtons').remove()
 
-function blockButton(button) {
-  let userId = button.getAttribute('block-message-id')
-  colorIds[userId] = 0
-  saveColorIds(colorIds)
-  paintMessages();
-}
+    let menu = document.querySelector('.p-member_profile_flexpane').childNodes[1].firstChild.firstChild
+    let list = menu.firstChild.firstChild
+    let user = list.firstChild.style.backgroundImage.split('-')[2]
+    document.querySelector('.p-flexpane__body.p-flexpane__body--light').style.backgroundColor = `${colors[colorIds[user]]}`
+    let buttonUp = document.createElement("button");
+    buttonUp.className = 'colorUp c-icon c-icon--arrow-large-left'
+    buttonUp.setAttribute('data-userId', `${user}`)
+    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
 
-function revealTarget(button) {
-  let parent = button.parentNode.parentNode.getAttribute("id")
-  button.parentNode.parentNode.removeChild(button.parentNode)
-  colorIds[parent] = 'revealed'
-  colorIds['revealed'] = 102
-  saveColorIds(colorIds)
-  paintMessages();
-}
+    let buttonDown = document.createElement("button");
+    buttonDown.className = 'colorDown c-icon c-icon--arrow-large-right'
+    buttonDown.setAttribute('data-userId', `${user}`)
+    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
 
-function blockedMessage(message) {
-  if (!(message.querySelector('.blocked-message'))) {
-    // let author = message.querySelector(".c-message__sender_link").innerHTML
-    let node1 = document.createElement("Div");
-    // node1.innerHTML = `This message by ${author} was ignored.  `
-    node1.className = "blocked-message"
-    message.appendChild(node1)
+    let colorButtonContainer = document.createElement("Div");
+    colorButtonContainer.className = 'colorButtons'
 
-    let node2 = document.createElement("Button");
-    node2.innerHTML = "(Click here to show the message)"
-    node2.className = "blocked-message-button"
-    node1.appendChild(node2)
+    let containerInfo = document.createElement("Div");
+    containerInfo.className = 'color-container-info'
+    containerInfo.innerHTML = 'Select Color'
+
+    list.prepend(colorButtonContainer)
+    colorButtonContainer.appendChild(buttonUp)
+    colorButtonContainer.appendChild(containerInfo)
+    colorButtonContainer.appendChild(buttonDown)
+  } else {
+    let menu = document.querySelector('.p-member_profile_flexpane').childNodes[1].childNodes[1].firstChild
+    let list = menu.firstChild.firstChild
+    let user = list.firstChild.style.backgroundImage.split('-')[2]
+    document.querySelector('.p-flexpane__body.p-flexpane__body--light').style.backgroundColor = `${colors[colorIds[user]]}`
+    let buttonUp = document.createElement("button");
+    buttonUp.className = 'colorUp c-icon c-icon--arrow-large-left'
+    buttonUp.setAttribute('data-userId', `${user}`)
+    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
+
+    let buttonDown = document.createElement("button");
+    buttonDown.className = 'colorDown c-icon c-icon--arrow-large-right'
+    buttonDown.setAttribute('data-userId', `${user}`)
+    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
+
+    let colorButtonContainer = document.createElement("Div");
+    colorButtonContainer.className = 'colorButtons'
+
+    let containerInfo = document.createElement("Div");
+    containerInfo.className = 'color-container-info'
+    containerInfo.innerHTML = 'Select Color'
+
+    list.prepend(colorButtonContainer)
+    colorButtonContainer.appendChild(buttonUp)
+    colorButtonContainer.appendChild(containerInfo)
+    colorButtonContainer.appendChild(buttonDown)
   }
+}
+
+function changeUserColorSquares() {
+  if (document.querySelector('.color-container-menu')) {
+    document.querySelector('body').removeChild(document.querySelector('.color-container-menu'))
+  }
+  let menu = document.querySelector('.p-member_profile_flexpane').childNodes[1]
+  let list = menu.firstChild.firstChild.firstChild.firstChild.childNodes[1]
+  let user = list.style.backgroundImage.split('-')[2]
+  let containerColorMenu = document.createElement("Div");
+  containerColorMenu.className = 'color-container-menu'
+  Object.values(colors).forEach((color, idx) => {
+    if (idx < 80) {
+      let colorSquare = document.createElement("Div");
+      colorSquare.className = 'color-square'
+      colorSquare.setAttribute('data-userId', `${user}`)
+      colorSquare.setAttribute('data-colorId', `${idx + 1}`)
+      colorSquare.style.backgroundColor = `${color}`
+      containerColorMenu.append(colorSquare)
+
+      if (colors[colorIds[user]] === color) {
+        colorSquare.style.border = '3px solid white'
+      }
+    }
+  })
+  document.querySelector('body').append(containerColorMenu)
 }
