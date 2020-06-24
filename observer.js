@@ -4,12 +4,12 @@ function setupMainObserver() {
   var observer = new MutationObserver(function (mutationList) {
     for (var i = 0; i < mutationList.length; i++) {
       if (mutationList[i].addedNodes.length > 0) {
-        if (mutationList[i].target.className.includes('c-virtual_list__scroll_container')) {
-          return paintMessages();
+        if (mutationList[i].target.innerHTML.includes('p-rich_text_section')) {
+          paintMessages();
         } 
         if (mutationList[i].target.className.includes('p-member_profile_field__value')
           || mutationList[i].target.className.includes('p_member_profile_picture__img')) {
-          changeUserColorButtons()
+          setTimeout(() => {changeUserColorButtons()}, 200)
         }
         if (mutationList[i].target.className.includes('p-message_input')) {
           Array.from(document.querySelectorAll('.c-texty_input')).forEach(messageBox => {

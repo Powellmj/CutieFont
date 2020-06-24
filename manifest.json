@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "CutieFont",
-  "description": "Hey, Listen!",
+  "description": "Improves appearance of Slack, giving it a darkmode-friendly, customizable look.",
   "version": "0.7",
   "icons": {
     "16": "./images/thumb16.png",

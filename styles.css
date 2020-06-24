@@ -108,17 +108,17 @@
 }
 
 /* Makes message index's background color dark */
-.c-message_list > .c-scrollbar__hider, .p-workspace__secondary_view_contents, .p-workspace__primary_view_body {
+.c-message_list > .c-scrollbar__hider, .p-workspace__secondary_view_contents, .p-workspace__primary_view_body, .p-threads_view  {
   background-color: rgb(49, 49, 49) !important;
 }
 
 /* Makes threads replies stand out on dark background */
 .p-threads_flexpane__separator_count, .c-fullscreen_modal__body__content.c-fullscreen_modal__body__content--full_bleed, .p-file_viewer__header__meta__name, .p-file_viewer__header__meta__stack .c-timestamp__label,
 .c-empty_state__title, .c-empty_state__description, .c-virtual_list.c-virtual_list--scrollbar.c-scrollbar.c-scrollbar--hidden, .p-drafts_page.p-drafts_page--empty,
-.p-browse_page_layout__container, .p-app_launcher {
+.p-browse_page_layout__container, .p-app_launcher, .p-drafts_page {
   background-color: rgb(49, 49, 49) !important;
   background-image: inherit !important;
-  color: rgb(255, 255, 255) !important;
+  color: rgb(255, 255, 255);
 }
 
 .c-empty_state__secondary_action .c-link {
@@ -432,6 +432,10 @@
   background-color: rgb(54, 54, 54) !important;
 }
 
+.p-message_input_field.c-texty_input--multi_line.c-texty_input.ql-container.c-texty_input--sticky_composer.c-texty_input--double_decker {
+  color: black !important;
+}
+
 .c-filter_input.p-browse_page_layout__input, .c-multi_select_input__input.c-multi_select_input__input--initial, 
 .c-filter_input.p-app_launcher__search, .c-search__input_and_close, .c-search__input_box, .c-icon.c-search__input_box__icon.c-icon--search-medium,
 .c-button-unstyled.c-search__input_and_close__close .c-icon.c-icon--times, .c-search-autocomplete,
@@ -454,4 +458,12 @@
 
 .p-threads_view_reply {
   border: none !important;
+}
+
+.p-app_action_picker .c-select_options_list__option {
+    padding: 0 20px 0 22px !important;
+}
+
+.c-message_list__unread_divider {
+  z-index: 0 !important;
 }

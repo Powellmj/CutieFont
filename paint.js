@@ -109,7 +109,7 @@ function paintMessages() {
   messages.forEach((message, idx) => {
     let messageId = message.getAttribute("id")
     if (messageId in colorIds) {
-    } else if (message.innerHTML.includes("data-message-sender")) {
+    } else if (message.innerHTML.includes("c-message__sender_link")) {
       userId = message.querySelector(".c-message__sender_link").getAttribute('data-message-sender') || 'bot'
     } else {
       userId = userId || findUserId(messages, idx);
@@ -222,48 +222,25 @@ function tagMessage(message, messageId = null, userId = null) {
 }
 
 function changeUserColorButtons() {
-  if (document.querySelector('.colorButtons')) {
-    document.querySelector('.colorButtons').remove()
-
-    let menu = document.querySelector('.p-member_profile_flexpane').childNodes[1].firstChild.firstChild
+  if (document.querySelector('.p-member_profile_flexpane--ia')) {
+    let menu;
+    if (document.querySelector('.colorButtons')) {
+      document.querySelector('.colorButtons').remove()
+      menu = document.querySelector('.p-member_profile_flexpane--ia').childNodes[1].firstChild.firstChild
+    } else {
+      menu = document.querySelector('.p-member_profile_flexpane--ia').childNodes[1].childNodes[1].firstChild
+    }
     let list = menu.firstChild.firstChild
-    let user = list.firstChild.style.backgroundImage.split('-')[2]
+    let user = document.querySelector(".p-ia_member_profile__avatar__img").src.split('-')[2]
     document.querySelector('.p-flexpane__body.p-flexpane__body--light').style.backgroundColor = `${colors[colorIds[user]]}`
+
     let buttonUp = document.createElement("button");
     buttonUp.className = 'colorUp c-icon c-icon--arrow-large-left'
     buttonUp.setAttribute('data-userId', `${user}`)
-    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
 
     let buttonDown = document.createElement("button");
     buttonDown.className = 'colorDown c-icon c-icon--arrow-large-right'
     buttonDown.setAttribute('data-userId', `${user}`)
-    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
-
-    let colorButtonContainer = document.createElement("Div");
-    colorButtonContainer.className = 'colorButtons'
-
-    let containerInfo = document.createElement("Div");
-    containerInfo.className = 'color-container-info'
-    containerInfo.innerHTML = 'Select Color'
-
-    list.prepend(colorButtonContainer)
-    colorButtonContainer.appendChild(buttonUp)
-    colorButtonContainer.appendChild(containerInfo)
-    colorButtonContainer.appendChild(buttonDown)
-  } else {
-    let menu = document.querySelector('.p-member_profile_flexpane').childNodes[1].childNodes[1].firstChild
-    let list = menu.firstChild.firstChild
-    let user = list.firstChild.style.backgroundImage.split('-')[2]
-    document.querySelector('.p-flexpane__body.p-flexpane__body--light').style.backgroundColor = `${colors[colorIds[user]]}`
-    let buttonUp = document.createElement("button");
-    buttonUp.className = 'colorUp c-icon c-icon--arrow-large-left'
-    buttonUp.setAttribute('data-userId', `${user}`)
-    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
-
-    let buttonDown = document.createElement("button");
-    buttonDown.className = 'colorDown c-icon c-icon--arrow-large-right'
-    buttonDown.setAttribute('data-userId', `${user}`)
-    buttonUp.setAttribute('data-colorId', `${colorIds[user]}`)
 
     let colorButtonContainer = document.createElement("Div");
     colorButtonContainer.className = 'colorButtons'
@@ -283,9 +260,7 @@ function changeUserColorSquares() {
   if (document.querySelector('.color-container-menu')) {
     document.querySelector('body').removeChild(document.querySelector('.color-container-menu'))
   }
-  let menu = document.querySelector('.p-member_profile_flexpane').childNodes[1]
-  let list = menu.firstChild.firstChild.firstChild.firstChild.childNodes[1]
-  let user = list.style.backgroundImage.split('-')[2]
+  let user = document.querySelector(".p-ia_member_profile__avatar__img").src.split('-')[2]
   let containerColorMenu = document.createElement("Div");
   containerColorMenu.className = 'color-container-menu'
   Object.values(colors).forEach((color, idx) => {
